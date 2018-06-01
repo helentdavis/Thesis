@@ -39,9 +39,10 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
   return(datac)
 }
 
-manuscriptact$VegType <- factor(manuscriptact$VegType, levels = c("ES", "NG", "CC", "MW"))
-manuscriptact <- summarySE(manuscriptact, measurevar="Activity", groupvars=c("VegType","CommonName"))
-
+manuscriptact$CommonName <- factor(manuscriptact$CommonName,levels = c("American badger", "bobcat",
+  "coyote", "fox spp.", "raccoon", "skunk spp.", "unkn mesomammal", "grasshopper mouse", "hispid cotton rat",
+  "Mexican ground squirrel", "Southern Plains woodrat", "coachwhip", "eastern patch-nosed snake",
+  "Great Plains rat snake", "kingsnake spp.", "long-nosed snake","western diamondback rattlesnake"))
 
 manuact2015<-subset(manuscriptact, Year=="2015")
 manuact2016<-subset(manuscriptact, Year=="2016")
@@ -85,24 +86,3 @@ ggplot(manuact2016, aes(x=CommonName, y=Activity, fill=VegType)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size=12, colour="black")) +
   theme(text=element_text(size=12, family="times", colour="black"))
 
-sm<-read.csv("D:/backupJuly2017/Thesis/thesis analyses/Final Thesis Analyses/PredAnalyses/smammal_final.csv", header=T)
-sm<- sm[,c(1:7)]
-library(reshape2)
-sm<-melt(sm, id.vars=c("Year", "Grid", "VegType"))
-write.csv(sm,"D:/backupJuly2017/Thesis/thesis analyses/Final Thesis Analyses/PredAnalyses/smreshape.csv")
-
-install.packages("extrafont")
-install.packages("Rttf2pt1")
-library(extrafont)
-library(Rttf2pt1)
-font_import()
-loadfonts(quiet = T)
-
-fonts()
-
-install.packages("showtext")
-library(showtext)
-
-library(showtext) 
-# If you have this font installed 
-font_add("times", "Times New Roman.ttf") 
