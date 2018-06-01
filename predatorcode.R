@@ -77,17 +77,17 @@ concealxedgexgroup.snake <-glm(PredType~Concealment*ClosestEdge*Group, family=bi
 concealxjulian.snake <-glm(PredType~Julian*Concealment, family=binomial(link=logit), dat=snake)
 
 LL.snake <- c(logLik(global.snake), logLik(null.snake), logLik(year.snake),logLik(shrub.snake),
-              logLik(edge.snake), logLik(conceal.snake),logLik(concealxjulian.snake),
+              logLik(edge.snake), logLik(conceal.snake),
               logLik(shrubxedge.snake), 
               logLik(shrubxconceal.snake),logLik(julian.snake))
 K.snake <- c(length(coef(global.snake)),length(coef(null.snake)),length(coef(year.snake)),length(coef(shrub.snake)),
-             length(coef(edge.snake)),length(coef(conceal.snake)),length(coef(concealxjulian.snake)),
+             length(coef(edge.snake)),length(coef(conceal.snake)),
              length(coef(shrubxedge.snake)), 
              length(coef(shrubxconceal.snake)),length(coef(julian.snake)))
-Modnames.snake <- c("Global", "Null", "Year", "Shrub", "Edge", "Concealment", "Julian x Concealment",
+Modnames.snake <- c("Global", "Null", "Year", "Shrub", "Edge", "Concealment",
                     "Shrub x Edge", 
                     "Shrub x Concealment", "Julian")
-modeltable.snake <- aictabCustom(LL.snake, K.snake, modnames= Modnames.snake, nobs = 10)
+modeltable.snake <- aictabCustom(LL.snake, K.snake, modnames= Modnames.snake, nobs = 9)
 write.table(modeltable.snake, file = "C:/Users/Helen Davis/Desktop/Manuscripts/snake aic.csv", sep = ",")
 
 ggplot(snake, aes(x=TotalShrub, y=Fate)) + stat_smooth(method="glm", method.args=list(family="binomial"), se=T, color="black")+
@@ -124,7 +124,11 @@ dfc$NewFate <- as.numeric(dfc$NewFate)
 
 library(ggplot2)
 ggplot(dfc, aes(x=TotalShrub, y=NewFate, group=model)) + stat_smooth(method="glm", method.args=list(family="binomial"), color="black")+
-  ylim(0,1)+ ylab("Predicted Probability") +xlab("Shrub Cover %")+
-  theme(axis.text=element_text(size=12),  axis.title=element_text(size=16),panel.grid.major = element_blank(), 
+  geom_vline(xintercept=c(50), linetype="dotted", size=1.5)+ 
+  annotate(label = sprintf("Snake Predation"), geom = "text", x = 82, y = .99, size = 4) +
+  annotate(label = sprintf("Nest Success"), geom = "text", x = 73, y = .02, size = 4) +
+  ylim(0,1)+xlim(0,85)+ ylab("Predicted Probability") +xlab("Shrub Cover %")+
+  theme(axis.text=element_text(size=10),  axis.title=element_text(size=12),panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
 
