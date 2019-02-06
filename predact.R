@@ -92,9 +92,9 @@ datsum <- summarySE(dat, measurevar="activity", groupvars=c("vegtype","common_na
 ## You will be prompted twice for lists
 ##    1. Enter where you want your column breaks to be (e.g. vegetation type)
 ##    2. Enter the full name of each vegetation type if you are using an abbreviation
-ggplot(manuact2015, aes(x=CommonName, y=activity, fill=vegtype)) + 
+ggplot(manuact2015, aes(x=common_name, y=activity, fill=vegtype)) + 
   geom_bar(position=position_dodge(), stat="identity", colour="black", size=.3) +   
-  geom_errorbar(aes(ymin=Activity-se, ymax=Activity+se), size=.3, width=.2, position=position_dodge(.9)) +
+  geom_errorbar(aes(ymin=activity-se, ymax=activity+se), size=.3, width=.2, position=position_dodge(.9)) +
   xlab("Species") + ylab("Activity") + 
   scale_fill_grey(name="Vegetation Type", breaks=c(print(levels())), labels=c(print(levels()))) +
   ylim(0,8) + theme_bw() + ggtitle("Year") + 
